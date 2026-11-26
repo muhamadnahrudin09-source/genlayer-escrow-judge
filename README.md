@@ -16,23 +16,42 @@ Agentic commerce (x402, A2A, ERC-8004, agent payment protocols) all engineer the
 
 ## Files
 
-- `contract.py` — the Intelligent Contract (GenVM, Python).
+- `contract.py` — **EscrowJudge**: escrow whose delivery dispute is adjudicated by the validators' model from plain-language evidence.
+- `prediction_judge.py` — **PredictionJudge**: a prediction market on plain-language questions (things oracles can't parse), resolved by AI consensus, pro-rata payouts.
+- `agent_reputation.py` — **AgentReputation**: staked vouch/accuse reputation for autonomous agents, AI-verified interaction reviews, challenge adjudication.
 - `LICENSE` — MIT.
 
 ## Deploy
 
-Open [GenLayer Studio](https://studio.genlayer.com), create a new project from `contract.py`, deploy to the Clarke testnet, and call `deposit()` with value to fund it. See the [GenLayer docs](https://docs.genlayer.com) for validator context.
+Open [GenLayer Studio](https://studio.genlayer.com), import any of the `.py` files, deploy to the Clarke testnet, and interact per the methods below. See the [GenLayer docs](https://docs.genlayer.com) for validator context.
 
 ## Contract surface
 
+### EscrowJudge (`contract.py`)
 | Method | Kind | Purpose |
 |---|---|---|
 | `deposit()` | write, payable | fund the escrow |
 | `open_dispute()` | write | open a delivery dispute |
 | `resolve(buyer_evidence, seller_evidence)` | write | AI adjudication via Equivalence Principle |
 | `settle_amicable(to_buyer)` | write | settle without a dispute |
-| `status()` | view | `awaiting_funding / funded / disputed / settled:<winner>` |
-| `get_details()` | view | full state as JSON |
+| `status()` / `get_details()` | view | state |
+
+### PredictionJudge (`prediction_judge.py`)
+| Method | Kind | Purpose |
+|---|---|---|
+| `bet_yes()` / `bet_no()` | write, payable | stake on the outcome until close |
+| `resolve()` | write | AI resolution against the agreed rules |
+| `claim()` | write | winners withdraw pro-rata |
+| `odds()` / `details()` | view | live odds, state |
+
+### AgentReputation (`agent_reputation.py`)
+| Method | Kind | Purpose |
+|---|---|---|
+| `vouch(note)` / `accuse(note)` | write, payable | staked reputation |
+| `add_ai_verified_review(transcript)` | write | validators grade a real interaction 0-10 |
+| `close_challenge()` | write | AI rules on the accusations |
+| `claim()` | write | winners withdraw |
+| `reputation()` | view | public reputation line |
 
 ## License
 
